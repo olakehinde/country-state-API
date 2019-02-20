@@ -60,58 +60,67 @@ class PassportController extends Controller
 
     // get all countries
     public function getCountries() {
-        $success = Country::all();
+        $user = Auth::user();
 
-        // $success['token'] = $success->createToken('API')->accessToken;
+        $countries = Country::all();
 
-        return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+        $success['token'] = $user->createToken('API')->accessToken;
+
+        return response()->json(['data' => $countries, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     // get the details of a single country
      public function getCountry($id) {
-        $success = Country::where('id', $id)->get();
+        $user = Auth::user();
 
-        // $success['token'] = $success->createToken('API')->accessToken;
+        $country = Country::where('id', $id)->get();
 
-        return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+        $success['token'] = $user->createToken('API')->accessToken;
+
+        return response()->json(['data' => $country, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     // get all states in a country
     public function getStates($country_id) {
-        $success = State::where('country_id', $country_id)->get();
+        $user = Auth::user();
+        
+        $states = State::where('country_id', $country_id)->get();
 
-        // $success['token'] = $success->createToken('API')->accessToken;
+        $success['token'] = $user->createToken('API')->accessToken;
 
-        return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+        return response()->json(['data' => $states, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     // get the details of a single state
     public function getState($id) {
-        $success = State::where('id', $id)->get();
+        $user = Auth::user();
 
-        // $success['token'] = $success->createToken('API')->accessToken;
+        $state = State::where('id', $id)->get();
 
-        return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+        $success['token'] = $user->createToken('API')->accessToken;
+
+        return response()->json(['data' => $state, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     // get all cities in a state
     public function getCities($state_id) {
         $user = Auth::user();
 
-        $city = City::where('state_id', $state_id)->get();
+        $cities = City::where('state_id', $state_id)->get();
+
+        $success['token'] = $user->createToken('API')->accessToken;
+
+        return response()->json(['data' => $cities, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+    }
+
+     // get details of a single city
+    public function getCity($id) {
+        $user = Auth::user();
+
+        $city = City::where('id', $id)->get();
 
         $success['token'] = $user->createToken('API')->accessToken;
 
         return response()->json(['data' => $city, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
-
-     // get details of a single city
-    public function getCity($id) {
-        $success = City::where('id', $id)->get();
-
-        // $success['token'] = $success->createToken('API')->accessToken;
-
-        return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
-    }
 }
-
